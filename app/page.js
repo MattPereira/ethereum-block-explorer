@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 import { alchemy } from "@/lib/alchemy";
 import { useEffect, useState } from "react";
@@ -64,7 +65,9 @@ export default function Home() {
           {blockDetails.map((block) => (
             <tr key={block.number}>
               <td className="py-2 border-b border-black px-2">
-                {block.number}
+                <Link href={`/block/${block.number}`} className="text-blue-600">
+                  {block.number}
+                </Link>
               </td>
               <td className="text-end border-b border-black">
                 {block.transactions.length}

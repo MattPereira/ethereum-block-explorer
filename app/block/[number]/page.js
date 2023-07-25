@@ -7,19 +7,21 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 export default function BlockPage({ params }) {
   const [block, setblock] = useState();
 
-  console.log("params", params);
+  const blockNumber = +params.number;
+
+  console.log("blockNumber", blockNumber);
 
   useEffect(() => {
     async function getblock() {
       const blockData = await alchemy.core.getBlockWithTransactions(
-        params.slug
+        blockNumber
       );
 
       setblock(blockData);
     }
 
     getblock();
-  }, [params.slug]);
+  }, [blockNumber]);
 
   if (!block) return <LoadingSpinner />;
 
