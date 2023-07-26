@@ -43,22 +43,19 @@ export default function Home() {
 
   return (
     <main>
-      <h1 className="font-cubano text-6xl text-center mb-8">
-        Ethereum Block Explorer
-      </h1>
+      <h1 className="font-cubano text-6xl text-center mb-8">Block Explorer</h1>
       <div className="flex items-center mb-3">
         <Image src={blockSvg} alt="block" />
         <h3 className="font-cubano text-3xl">Latest Blocks</h3>
       </div>
       <table className="min-w-full font-gothic">
         <thead className="text-2xl">
-          <tr className="border border-2 border-black bg-neutral-900 text-white">
+          <tr className="border-b-2 border-black">
             <th className="text-start py-2 px-2">Number</th>
             <th className="text-end">Transactions</th>
             <th className="text-end">Miner</th>
             <th className="text-end">Base Fee Per Gas</th>
-            <th className="text-end">Gas Used</th>
-            <th className="text-end px-2">Gas Limit</th>
+            <th className="text-end px-2">Gas Used</th>
           </tr>
         </thead>
         <tbody className="text-2xl">
@@ -70,7 +67,12 @@ export default function Home() {
                 </Link>
               </td>
               <td className="text-end border-b border-black">
-                {block.transactions.length}
+                <Link
+                  href={`/block/${block.number}?tab=transactions`}
+                  className="text-blue-600"
+                >
+                  {block.transactions.length}
+                </Link>
               </td>
               <td className="text-end border-b border-black">
                 {block.miner.slice(0, 4) + "..." + block.miner.slice(-4)}
@@ -78,11 +80,8 @@ export default function Home() {
               <td className="text-end border-b border-black">
                 {(parseInt(block.baseFeePerGas._hex) / 1e9).toFixed(2)} Gwei
               </td>
-              <td className="text-end border-b border-black">
-                {parseInt(block.gasUsed)}
-              </td>
               <td className="text-end border-b border-black px-2">
-                %{(parseInt(block.gasUsed) / 300000).toFixed(2)}
+                {(parseInt(block.gasUsed) / 300000).toFixed(2)}%
               </td>
             </tr>
           ))}

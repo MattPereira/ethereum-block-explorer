@@ -1,15 +1,23 @@
 "use client";
 import { alchemy } from "@/lib/alchemy";
 import { useEffect, useState } from "react";
+// import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 
+import Transactions from "./transactions";
+import Overview from "./overview";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function BlockPage({ params }) {
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get("tab");
+  console.log("search", search);
+
   const [block, setblock] = useState();
+  const [activeTab, setActiveTab] = useState(search || "overview");
 
   const blockNumber = +params.number;
-
-  console.log("blockNumber", blockNumber);
 
   useEffect(() => {
     async function getblock() {
@@ -25,30 +33,34 @@ export default function BlockPage({ params }) {
 
   if (!block) return <LoadingSpinner />;
 
-  console.log("block", block);
-
   return (
     <div>
-      <h1 className="font-cubano text-6xl mb-6">Block #{block.number}</h1>
-      <div className="font-gothic text-2xl">
-        <h5>
-          <span className="font-bold"> Miner : </span>
-          {block.miner}
-        </h5>
-        <h5>
-          <span className="font-bold"> Transactions : </span>{" "}
-          {block.transactions.length}
-        </h5>
-        <h5>
-          <span className="font-bold"> Gas Used : </span>
-          {(parseInt(block.gasUsed) / 300000).toFixed(2)}%
-        </h5>
-        {/* <h5>Gas Limit: {block.gasLimit}</h5> */}
-        <h5>
-          <span className="font-bold"> Base Fee Per Gas : </span>
-          {(parseInt(block.baseFeePerGas._hex) / 1e9).toFixed(2)} Gwei
-        </h5>
+      <h1 className="font-cubano text-4xl md:text-5xl lg:text-6xl mb-6">
+        Block <span className="font-gothic">#{block.number}</span>
+      </h1>
+      <hr className="border-1 border-black mb-5" />
+      <div className="flex space-x-4 mb-5">
+        <button
+          className={`py-2 px-4 rounded-xl bg-neutral-200 font-semibold ${
+            activeTab === "overview" && "text-white bg-blue-500"
+          }`}
+          onClick={() => setActiveTab("overview")}
+        >
+          Overview
+        </button>
+        <button
+          className={`py-2 px-4 rounded-xl bg-neutral-200 font-semibold ${
+            activeTab === "transactions" && "text-white bg-blue-500"
+          }`}
+          onClick={() => setActiveTab("transactions")}
+        >
+          Transactions
+        </button>
       </div>
+      {activeTab === "overview" && <Overview block={block} />}
+      {activeTab === "transactions" && (
+        <Transactions transactions={block.transactions} />
+      )}
     </div>
   );
 }
