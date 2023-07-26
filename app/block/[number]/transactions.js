@@ -16,9 +16,10 @@ export default function Transactions({ transactions }) {
         {transactions.map((transaction) => {
           const { hash, from, to, value } = transaction;
 
-          const txHash = hash.slice(0, 10) + "...";
-          const txFrom = from.slice(0, 5) + "..." + from.slice(-4);
-          const txTo = to.slice(0, 5) + "..." + to.slice(-4);
+          const txHash = hash?.slice(0, 10) + "...";
+          const txFrom = from?.slice(0, 5) + "..." + from.slice(-4);
+          const txTo = to?.slice(0, 5) + "..." + to.slice(-4);
+          const txValue = Utils.formatEther(value) + " ETH";
 
           return (
             <tr key={transaction.hash}>
@@ -30,9 +31,7 @@ export default function Transactions({ transactions }) {
                 </div>
               </td>
               <td className="text-start">{txTo}</td>
-              <td className="text-start">
-                {Utils.formatEther(transaction.value)} ETH
-              </td>
+              <td className="text-start">{txValue}</td>
             </tr>
           );
         })}

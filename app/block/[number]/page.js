@@ -1,7 +1,6 @@
 "use client";
 import { alchemy } from "@/lib/alchemy";
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 
 import Transactions from "./transactions";
@@ -35,8 +34,9 @@ export default function BlockPage({ params }) {
 
   return (
     <div>
-      <h1 className="font-cubano text-4xl md:text-5xl lg:text-6xl mb-6">
-        Block <span className="font-gothic">#{block.number}</span>
+      <h1 className="font-cubano text-4xl md:text-5xl lg:text-5xl mb-6">
+        Block{" "}
+        <span className="font-gothic text-neutral-400">#{block.number}</span>
       </h1>
       <hr className="border-1 border-black mb-5" />
       <div className="flex space-x-4 mb-5">
