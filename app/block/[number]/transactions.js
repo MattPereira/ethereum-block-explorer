@@ -18,7 +18,7 @@ export default function Transactions({ transactions }) {
 
           const txHash = hash?.slice(0, 10) + "...";
           const txFrom = from?.slice(0, 5) + "..." + from.slice(-4);
-          const txTo = to?.slice(0, 5) + "..." + to.slice(-4);
+          const txTo = to?.slice(0, 5) + "..." + to?.slice(-4);
           const txValue = Utils.formatEther(value) + " ETH";
 
           return (

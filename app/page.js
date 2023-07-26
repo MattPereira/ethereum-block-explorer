@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { alchemy } from "@/lib/alchemy";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import blockSvg from "@/public/block.svg";
@@ -12,31 +13,16 @@ export default function Home() {
   const [blockDetails, setBlockDetails] = useState();
 
   useEffect(() => {
-    async function getBlockNumber() {
-      const latestBlockNumber = await alchemy.core.getBlockNumber();
-
-      // return latest block number for use in getBlockDetails()
-      return latestBlockNumber;
+    async function getRecentBlocks() {
+      try {
+        const response = await axios.get("/api/recent-blocks");
+        setBlockDetails(response.data);
+      } catch (error) {
+        console.log("error", error);
+      }
     }
 
-    async function getBlockDetails(number) {
-      // make array that has latest 5 block numbers
-      const last5BlockNumbers = Array.from(
-        { length: 10 },
-        (_, i) => number - i
-      );
-
-      const last5BlockDetails = await Promise.all(
-        last5BlockNumbers.map((blockNumber) =>
-          alchemy.core.getBlock(blockNumber)
-        )
-      );
-
-      setBlockDetails(last5BlockDetails);
-    }
-
-    // wait for latest block number to be fetched, then get details for latest 5 blocks
-    getBlockNumber().then((number) => getBlockDetails(number));
+    getRecentBlocks();
   }, []);
 
   if (!blockDetails) return <LoadingSpinner />;
@@ -59,32 +45,45 @@ export default function Home() {
           </tr>
         </thead>
         <tbody className="text-2xl">
-          {blockDetails.map((block) => (
-            <tr key={block.number}>
-              <td className="py-2 border-b border-black px-2">
-                <Link href={`/block/${block.number}`} className="text-blue-600">
-                  {block.number}
-                </Link>
-              </td>
-              <td className="text-end border-b border-black">
-                <Link
-                  href={`/block/${block.number}?tab=transactions`}
-                  className="text-blue-600"
-                >
-                  {block.transactions.length}
-                </Link>
-              </td>
-              <td className="text-end border-b border-black">
-                {block.miner.slice(0, 4) + "..." + block.miner.slice(-4)}
-              </td>
-              <td className="text-end border-b border-black">
-                {(parseInt(block.baseFeePerGas._hex) / 1e9).toFixed(2)} Gwei
-              </td>
-              <td className="text-end border-b border-black px-2">
-                {(parseInt(block.gasUsed) / 300000).toFixed(2)}%
-              </td>
-            </tr>
-          ))}
+          {blockDetails.map((block) => {
+            const { number, transactions, miner, baseFeePerGas, gasUsed } =
+              block;
+
+            const totalTransactions = transactions.length;
+
+            const blockBaseFeePerGas =
+              (parseInt(baseFeePerGas.hex) / 1e9).toFixed(2) + " Gwei";
+
+            const blockGasUsed =
+              (parseInt(gasUsed.hex) / 300000).toFixed(2) + "%";
+
+            return (
+              <tr key={number}>
+                <td className="py-2 border-b border-black px-2">
+                  <Link href={`/block/${number}`} className="text-blue-600">
+                    {number}
+                  </Link>
+                </td>
+                <td className="text-end border-b border-black">
+                  <Link
+                    href={`/block/${number}?tab=transactions`}
+                    className="text-blue-600"
+                  >
+                    {totalTransactions}
+                  </Link>
+                </td>
+                <td className="text-end border-b border-black">
+                  {miner.slice(0, 4) + "..." + miner.slice(-4)}
+                </td>
+                <td className="text-end border-b border-black">
+                  {blockBaseFeePerGas}
+                </td>
+                <td className="text-end border-b border-black px-2">
+                  {blockGasUsed}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </main>

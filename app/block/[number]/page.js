@@ -11,10 +11,11 @@ export default function BlockPage({ params }) {
   const searchParams = useSearchParams();
 
   const search = searchParams.get("tab");
-  console.log("search", search);
 
   const [block, setblock] = useState();
   const [activeTab, setActiveTab] = useState(search || "overview");
+
+  console.log("activeTab", activeTab);
 
   const blockNumber = +params.number;
 
@@ -41,16 +42,20 @@ export default function BlockPage({ params }) {
       <hr className="border-1 border-black mb-5" />
       <div className="flex space-x-4 mb-5">
         <button
-          className={`py-2 px-4 rounded-xl bg-neutral-200 font-semibold ${
-            activeTab === "overview" && "text-white bg-blue-500"
+          className={`py-2 px-4 rounded-xl font-semibold ${
+            activeTab === "overview"
+              ? "text-white bg-blue-500"
+              : " bg-neutral-200"
           }`}
           onClick={() => setActiveTab("overview")}
         >
           Overview
         </button>
         <button
-          className={`py-2 px-4 rounded-xl bg-neutral-200 font-semibold ${
-            activeTab === "transactions" && "text-white bg-blue-500"
+          className={`py-2 px-4 rounded-xl font-semibold ${
+            activeTab === "transactions"
+              ? "text-white bg-blue-500"
+              : " bg-neutral-200"
           }`}
           onClick={() => setActiveTab("transactions")}
         >

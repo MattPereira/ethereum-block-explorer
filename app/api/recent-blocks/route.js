@@ -23,7 +23,7 @@ export async function GET(request) {
       last5BlockNumbers.map((blockNumber) => alchemy.core.getBlock(blockNumber))
     );
 
-    return new Response(JSON.stringify({ recentBlocks }));
+    return new Response(JSON.stringify(recentBlocks));
   } catch (err) {
     console.log("err", err);
   }
