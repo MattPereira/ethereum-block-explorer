@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 import axios from "axios";
+import blockSvg from "@/public/block.svg";
 
 import Transactions from "./transactions";
 import Overview from "./overview";
@@ -25,7 +27,6 @@ export default function BlockPage({ params }) {
             blockNumber,
           },
         });
-        console.log(response.data);
 
         setBlock(response.data);
       } catch (err) {
@@ -40,12 +41,16 @@ export default function BlockPage({ params }) {
 
   return (
     <main className="m-5 lg:m-10">
-      <h1 className="font-gothic text-4xl md:text-5xl lg:text-5xl mb-6">
-        Block{" "}
-        <span className="text-neutral-500 text-3xl md:text-4xl">
-          #{block.number}
-        </span>
-      </h1>
+      <div className="flex items-center mb-6">
+        <Image src={blockSvg} alt="block" width={50} height={50} />
+        <h1 className="font-gothic text-4xl md:text-5xl lg:text-5xl ">
+          Block{" "}
+          <span className="text-neutral-500 text-3xl md:text-4xl">
+            #{block.number}
+          </span>
+        </h1>
+      </div>
+
       <div className="flex space-x-4 mb-5">
         <button
           className={`py-2 px-4 rounded-xl font-semibold ${

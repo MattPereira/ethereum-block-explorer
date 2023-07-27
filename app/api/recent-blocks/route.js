@@ -1,11 +1,4 @@
-import { Alchemy, Network } from "alchemy-sdk";
-
-const settings = {
-  apiKey: process.env.ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
-
-const alchemy = new Alchemy(settings);
+import alchemy from "../alchemy.js";
 
 export async function GET(request) {
   try {

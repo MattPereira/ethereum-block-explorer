@@ -2,12 +2,12 @@ import alchemy from "../alchemy.js";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-
   try {
-    const blockNumber = +searchParams.get("number");
-    const blockData = await alchemy.core.getBlockWithTransactions(blockNumber);
+    const txHash = searchParams.get("hash");
 
-    return new Response(JSON.stringify(blockData));
+    const transactionDetails = await alchemy.core.getTransaction(txHash);
+
+    return new Response(JSON.stringify(transactionDetails));
   } catch (err) {
     console.log("err", err);
   }

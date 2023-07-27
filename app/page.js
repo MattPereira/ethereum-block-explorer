@@ -29,29 +29,6 @@ export default function Home() {
 
   return (
     <main>
-      <section style={{ backgroundColor: "#1a2231" }} className="h-72">
-        <div className="flex flex-col justify-center h-full px-10">
-          <div className="flex items-center">
-            <div className="lg:basis-1/2 font-gothic">
-              <h1 className="mb-3 text-2xl text-white font-gothic">
-                Ethereum Mainnet Explorer
-              </h1>
-              <div className="flex shadow-white rounded-lg">
-                <input
-                  className="w-full px-4 py-3 rounded-l-lg text-xl outline-none"
-                  id="search"
-                  type="text"
-                  placeholder="Search by Address / Transaction Hash / Block # / Token"
-                />
-                <button className="bg-[#28a0f0] w-16 flex justify-center items-center rounded-r-lg">
-                  <Image src={searchSvg} alt="eye glass search button" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="m-5 lg:m-10">
         <div className="border border-gray-300 shadow-md rounded-lg bg-white">
           <div className="flex items-center mb-3 border-b border-gray-300 px-5 py-3">

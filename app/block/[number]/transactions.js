@@ -1,7 +1,7 @@
 import { Utils } from "alchemy-sdk";
+import Link from "next/link";
 
 export default function Transactions({ transactions }) {
-  console.log("transactions", transactions);
   return (
     <div className="bg-white p-5 rounded-xl border border-neutral-300 shadow-md overflow-x-auto">
       <table className="font-gothic min-w-full text-xl">
@@ -26,7 +26,12 @@ export default function Transactions({ transactions }) {
             return (
               <tr key={transaction.hash}>
                 <td className="py-2 px-2 border-b border-neutral-300">
-                  {txHash}
+                  <Link
+                    href={`/transaction/${transaction.hash}`}
+                    className="text-blue-500"
+                  >
+                    {txHash}
+                  </Link>
                 </td>
                 <td className="py-2 px-2 text-start border-b border-neutral-30">
                   {txFrom}
