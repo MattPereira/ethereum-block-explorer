@@ -1,10 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import axios from "axios";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function Address({ params }) {
   const { address } = params;
   const [addressData, setAddressData] = useState();
+
+  useEffect(() => {
+    async function getAddressData() {
+      try {
+        const response = await axios.get(`/api/address/${address}`);
+        setAddressData(response.data);
+      } catch (err) {
+        console.log("error", err);
+      }
+    }
+    getAddressData();
+  }, [address]);
+
+  if (!addressData) return <LoadingSpinner />;
+  console.log(addressData);
 
   return (
     <main className="px-5 lg:px-10">
