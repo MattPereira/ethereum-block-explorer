@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import searchSvg from "@/public/search.svg";
 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import blockSvg from "@/public/block.svg";
@@ -37,12 +36,12 @@ export default function Home() {
           <div className="px-5 pb-5 pt-1 overflow-x-auto">
             <table className="min-w-full font-gothic">
               <thead className="text-2xl">
-                <tr className="border-b border-black">
-                  <th className="text-start pb-2 px-5">Number</th>
-                  <th className="text-end">Transactions</th>
-                  <th className="text-end">Miner</th>
-                  <th className="text-end">Base Fee Per Gas</th>
-                  <th className="text-end px-2">Gas Used</th>
+                <tr className="border-b border-black whitespace-nowrap">
+                  <th className="text-start pb-2">Number</th>
+                  <th className="text-end pb-2">Transactions</th>
+                  <th className="text-end pb-2">Miner</th>
+                  <th className="text-end pb-2">Base Fee Per Gas</th>
+                  <th className="text-end pb-2">Gas Used</th>
                 </tr>
               </thead>
               <tbody className="text-2xl">
@@ -68,7 +67,7 @@ export default function Home() {
                       <td className="py-2 border-b border-grey-300 px-2">
                         <Link
                           href={`/block/${number}`}
-                          className="text-blue-600 flex items-center"
+                          className="text-blue-500 flex items-center"
                         >
                           <Image
                             src={blockSvg}
@@ -82,13 +81,18 @@ export default function Home() {
                       <td className="text-end border-b border-grey-300">
                         <Link
                           href={`/block/${number}?tab=transactions`}
-                          className="text-blue-600"
+                          className="text-blue-500"
                         >
                           {totalTransactions}
                         </Link>
                       </td>
                       <td className="text-end border-b border-grey-300">
-                        {miner.slice(0, 4) + "..." + miner.slice(-4)}
+                        <Link
+                          href={`/address/${miner}`}
+                          className="text-blue-500"
+                        >
+                          {miner.slice(0, 4) + "..." + miner.slice(-4)}
+                        </Link>
                       </td>
                       <td className="text-end border-b border-grey-300">
                         {blockBaseFeePerGas}

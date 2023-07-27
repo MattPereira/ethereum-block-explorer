@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Utils } from "alchemy-sdk";
 import axios from "axios";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import Link from "next/link";
 
 export default function Transaction({ params }) {
   const { hash } = params;
@@ -37,11 +38,19 @@ export default function Transaction({ params }) {
     },
     {
       label: "From :",
-      value: tx.from,
+      value: (
+        <Link href={`/address/${tx.from}`} className="text-blue-500">
+          {tx.from}
+        </Link>
+      ),
     },
     {
       label: "To :",
-      value: tx.to,
+      value: (
+        <Link href={`/address/${tx.to}`} className="text-blue-500">
+          {tx.to}
+        </Link>
+      ),
     },
     {
       label: "Value :",

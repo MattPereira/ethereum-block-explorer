@@ -32,7 +32,7 @@ export default function Navigation() {
                   className="w-full px-4 py-3 rounded-l-lg text-xl outline-none"
                   id="search"
                   type="text"
-                  placeholder="Search by Address / Transaction Hash / Block # / Token"
+                  placeholder="Address, Transaction Hash, or Block Number"
                 />
                 <button className="bg-[#28a0f0] w-16 flex justify-center items-center rounded-r-lg">
                   <Image src={searchSvg} alt="eye glass search button" />
