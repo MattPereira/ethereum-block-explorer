@@ -12,9 +12,9 @@ export async function GET(request) {
 
   try {
     const blockNumber = +searchParams.get("number");
-    const blockData = await alchemy.core.getBlock(blockNumber);
+    const blockData = await alchemy.core.getBlockWithTransactions(blockNumber);
 
-    return new Response(JSON.stringify({ blockData }));
+    return new Response(JSON.stringify(blockData));
   } catch (err) {
     console.log("err", err);
   }

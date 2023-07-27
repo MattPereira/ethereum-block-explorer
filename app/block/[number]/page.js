@@ -1,7 +1,7 @@
 "use client";
-import { alchemy } from "@/lib/alchemy";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 import Transactions from "./transactions";
 import Overview from "./overview";
@@ -12,20 +12,25 @@ export default function BlockPage({ params }) {
 
   const search = searchParams.get("tab");
 
-  const [block, setblock] = useState();
+  const [block, setBlock] = useState();
   const [activeTab, setActiveTab] = useState(search || "overview");
-
-  console.log("activeTab", activeTab);
 
   const blockNumber = +params.number;
 
   useEffect(() => {
     async function getblock() {
-      const blockData = await alchemy.core.getBlockWithTransactions(
-        blockNumber
-      );
+      try {
+        const response = await axios.get(`/api/block?number=${blockNumber}`, {
+          params: {
+            blockNumber,
+          },
+        });
+        console.log(response.data);
 
-      setblock(blockData);
+        setBlock(response.data);
+      } catch (err) {
+        console.log("error", err);
+      }
     }
 
     getblock();
@@ -34,18 +39,19 @@ export default function BlockPage({ params }) {
   if (!block) return <LoadingSpinner />;
 
   return (
-    <div>
-      <h1 className="font-cubano text-4xl md:text-5xl lg:text-5xl mb-6">
+    <main className="m-5 lg:m-10">
+      <h1 className="font-gothic text-4xl md:text-5xl lg:text-5xl mb-6">
         Block{" "}
-        <span className="font-gothic text-neutral-400">#{block.number}</span>
+        <span className="text-neutral-500 text-3xl md:text-4xl">
+          #{block.number}
+        </span>
       </h1>
-      <hr className="border-1 border-black mb-5" />
       <div className="flex space-x-4 mb-5">
         <button
           className={`py-2 px-4 rounded-xl font-semibold ${
             activeTab === "overview"
               ? "text-white bg-blue-500"
-              : " bg-neutral-200"
+              : " bg-white border border-grey-300"
           }`}
           onClick={() => setActiveTab("overview")}
         >
@@ -55,7 +61,7 @@ export default function BlockPage({ params }) {
           className={`py-2 px-4 rounded-xl font-semibold ${
             activeTab === "transactions"
               ? "text-white bg-blue-500"
-              : " bg-neutral-200"
+              : " bg-white border border-gray-300"
           }`}
           onClick={() => setActiveTab("transactions")}
         >
@@ -66,6 +72,6 @@ export default function BlockPage({ params }) {
       {activeTab === "transactions" && (
         <Transactions transactions={block.transactions} />
       )}
-    </div>
+    </main>
   );
 }
