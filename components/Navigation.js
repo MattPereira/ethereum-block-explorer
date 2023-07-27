@@ -4,7 +4,7 @@ import EyeSvg from "../public/eye.svg";
 
 export default function Navigation() {
   return (
-    <div className="py-3 px-5 bg-neutral-300">
+    <div className="py-3 px-5">
       <div>
         <Link href="/" className="flex items-center">
           <Image src={EyeSvg} width={50} height={50} alt="Ethersight Logo" />
