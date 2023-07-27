@@ -11,7 +11,7 @@ export async function GET(request, { params }) {
     const transactionCount = await alchemy.core.getTransactionCount(address);
     const tokens = await alchemy.core.getTokensForOwner(address);
 
-    // etherscan endpoints
+    // https://docs.etherscan.io/api-endpoints/accounts
     const response = await axios.get("https://api.etherscan.io/api", {
       params: {
         module: "account",
@@ -22,7 +22,7 @@ export async function GET(request, { params }) {
         page: 1,
         offset: 10,
         sort: "asc",
-        apikey: "YourApiKeyToken",
+        apikey: process.env.ETHERSCAN_API_KEY,
       },
     });
 
