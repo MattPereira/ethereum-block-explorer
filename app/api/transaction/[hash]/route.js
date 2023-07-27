@@ -1,9 +1,8 @@
-import alchemy from "../alchemy.js";
+import alchemy from "../../alchemy.js";
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
+export async function GET(request, { params }) {
   try {
-    const txHash = searchParams.get("hash");
+    const { hash: txHash } = params;
 
     const transactionDetails = await alchemy.core.getTransaction(txHash);
 

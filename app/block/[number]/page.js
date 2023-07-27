@@ -22,11 +22,7 @@ export default function BlockPage({ params }) {
   useEffect(() => {
     async function getblock() {
       try {
-        const response = await axios.get(`/api/block?number=${blockNumber}`, {
-          params: {
-            blockNumber,
-          },
-        });
+        const response = await axios.get(`/api/block/${blockNumber}`);
 
         setBlock(response.data);
       } catch (err) {

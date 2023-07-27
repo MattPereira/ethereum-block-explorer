@@ -13,8 +13,7 @@ export default function Transaction({ params }) {
   useEffect(() => {
     async function getTransaction() {
       try {
-        const response = await axios.get(`/api/transaction?hash=${hash}`);
-
+        const response = await axios.get(`/api/transaction/${hash}`);
         setTx(response.data);
       } catch (err) {
         console.log("error", err);
