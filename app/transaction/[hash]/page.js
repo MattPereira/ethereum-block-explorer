@@ -38,7 +38,7 @@ export default function Transaction({ params }) {
     {
       label: "From :",
       value: (
-        <Link href={`/address/${tx.from}`} className="text-blue-500">
+        <Link href={`/account/${tx.from}`} className="text-blue-500">
           {tx.from}
         </Link>
       ),
@@ -46,7 +46,7 @@ export default function Transaction({ params }) {
     {
       label: "To :",
       value: (
-        <Link href={`/address/${tx.to}`} className="text-blue-500">
+        <Link href={`/account/${tx.to}`} className="text-blue-500">
           {tx.to}
         </Link>
       ),
@@ -72,7 +72,7 @@ export default function Transaction({ params }) {
 
   return (
     <div className="p-5 lg:p-10">
-      <h1 className="text-4xl text-gothic text-neutral-700">
+      <h1 className="text-3xl text-gothic text-neutral-700">
         Transaction Details
       </h1>
       <div className="bg-white border border-neutral-300 rounded-xl shadow-md px-5 py-2 mt-5 overflow-x-auto font-gothic text-xl">

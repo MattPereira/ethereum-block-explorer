@@ -5,7 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import blockSvg from "@/public/block.svg";
 
-import Transactions from "./transactions";
+import Transactions from "@/components/Transactions";
 import Overview from "./overview";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
@@ -23,7 +23,6 @@ export default function BlockPage({ params }) {
     async function getblock() {
       try {
         const response = await axios.get(`/api/block/${blockNumber}`);
-
         setBlock(response.data);
       } catch (err) {
         console.log("error", err);
@@ -37,11 +36,11 @@ export default function BlockPage({ params }) {
 
   return (
     <main className="m-5 lg:m-10">
-      <div className="flex items-center mb-6">
-        <Image src={blockSvg} alt="block" width={50} height={50} />
-        <h1 className="font-gothic text-4xl md:text-5xl lg:text-5xl ">
+      <div className="flex items-center mb-6 border-b border-neutral-300 pb-5">
+        <Image src={blockSvg} alt="block" width={40} height={40} />
+        <h1 className="font-gothic text-3xl md:text-5xl lg:text-4xl ml-2">
           Block{" "}
-          <span className="text-neutral-500 text-3xl md:text-4xl">
+          <span className="text-neutral-500 text-2xl md:text-3xl md:text-3xl">
             #{block.number}
           </span>
         </h1>

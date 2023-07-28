@@ -21,9 +21,9 @@ export default function Navigation() {
       </div>
 
       <section style={{ backgroundColor: "#1a2231" }} className="h-52 md:h-72">
-        <div className="flex flex-col justify-center h-full px-10">
+        <div className="flex flex-col justify-center h-full px-5 lg:px-10">
           <div className="flex items-center">
-            <div className="lg:basis-1/2 font-gothic">
+            <div className="w-full lg:basis-1/2 font-gothic">
               <h1 className="mb-3 text-2xl text-white font-gothic">
                 Ethereum Mainnet Explorer
               </h1>
