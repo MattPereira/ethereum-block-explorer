@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        white: "0px 4px 20px 0px rgba(255, 255, 255, 0.1)",
+        // white: "0px 2px 15px 0px rgba(255, 255, 255, 0.5)",
       },
       fontFamily: {
         cubano: ["cubano", "sans-serif"],

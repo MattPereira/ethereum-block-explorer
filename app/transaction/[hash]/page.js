@@ -5,6 +5,8 @@ import { Utils } from "alchemy-sdk";
 import axios from "axios";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Link from "next/link";
+import TxSvg from "@/public/transaction.svg";
+import Image from "next/image";
 
 export default function Transaction({ params }) {
   const { hash } = params;
@@ -70,9 +72,13 @@ export default function Transaction({ params }) {
 
   return (
     <div className="p-5 lg:p-10">
-      <h1 className="text-3xl text-gothic text-neutral-700">
-        Transaction Details
-      </h1>
+      <div className="flex items-center">
+        <Image src={TxSvg} alt="Transactionlogo " width={35} height={35} />
+        <h1 className="text-3xl text-gothic text-neutral-700 ml-2">
+          Transaction Details
+        </h1>
+      </div>
+
       <div className="bg-white border border-neutral-300 rounded-xl shadow-md px-5 py-2 mt-5 overflow-x-auto font-gothic text-xl">
         {items.map((item, index) => (
           <div

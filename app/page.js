@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 
 import { useEffect, useState } from "react";
@@ -8,7 +7,7 @@ import axios from "axios";
 import { Utils } from "alchemy-sdk";
 
 import LoadingSpinner from "@/components/LoadingSpinner";
-import blockSvg from "@/public/block.svg";
+import SearchBar from "@/components/SearchBar";
 import InfoDisplay from "@/components/InfoDisplay";
 
 export default function Home() {
@@ -73,6 +72,25 @@ export default function Home() {
 
   return (
     <main>
+      <section style={{ backgroundColor: "#1a2231" }} className="h-52 md:h-72">
+        <div className="flex flex-col justify-center h-full px-5 lg:px-10">
+          <div className="flex items-center">
+            <div className="w-full lg:basis-1/2 font-gothic">
+              <h1 className="mb-3 text-2xl text-white font-gothic">
+                Ethereum Mainnet Explorer
+              </h1>
+              <div
+                style={{
+                  boxShadow: "rgba(189, 197, 209, 0.25) 0px 8px 19.2px 0px",
+                }}
+                className="rounded-lg"
+              >
+                <SearchBar />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="m-5 lg:m-10">
         <div className="grid grid-cols-1 2xl:grid-cols-3 gap-4">
           <div>
@@ -92,12 +110,12 @@ export default function Home() {
 
       <section className="m-5 lg:m-10">
         <h3 className="font-gothic text-3xl mb-3">Latest Blocks</h3>
-        <div className="border border-gray-300 shadow-md rounded-lg bg-white">
+        <div className="border border-neutral-300 shadow-md rounded-lg bg-white">
           <div className="px-5 pb-2 pt-1 overflow-x-auto">
             <table className="min-w-full font-gothic">
               <thead className="text-2xl">
                 <tr className="border-b border-black whitespace-nowrap">
-                  <th className="text-start py-3">Number</th>
+                  <th className="text-start px-2 py-3">Number</th>
                   <th className="text-end py-3">Transactions</th>
                   <th className="text-end py-3">Miner</th>
                   <th className="text-end py-3">Base Fee Per Gas</th>
@@ -135,12 +153,6 @@ export default function Home() {
                           href={`/block/${number}`}
                           className="text-blue-500 flex items-center"
                         >
-                          <Image
-                            src={blockSvg}
-                            width={35}
-                            height={35}
-                            alt="block"
-                          />
                           {number}
                         </Link>
                       </td>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import searchSvg from "@/public/search.svg";
 import { useForm } from "react-hook-form";
+import { usePathname } from "next/navigation";
 
 /**
  * dynamically directs user to account, transaction, or block page
@@ -13,6 +14,7 @@ import { useForm } from "react-hook-form";
 // TODO: handle not found input page
 // TODO: handle 404 page
 export default function SearchBar() {
+  const pathname = usePathname();
   const {
     register,
     handleSubmit,
@@ -21,12 +23,24 @@ export default function SearchBar() {
   } = useForm();
   const onSubmit = (data) => console.log(data);
 
-  //
+  // accounts are 42 characters long and start with 0x
+
+  // transactions are 66 characters long and start with 0x
+
+  // blocks are numbers between 0 and 99999999
+
+  // maybe check if its a number less than latest block?
+
+  // if all of those conditions fail, send user to 404 page
+
+  // how to move search bar into navbar if not on home page?
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full flex">
         <input
-          className="w-full px-4 py-3 rounded-l-lg text-xl outline-none"
+          className={`w-full px-4 py-3 rounded-l-lg text-xl ${
+            pathname === "/" ? "outline-none" : "border border-neutral-400"
+          }`}
           id="search"
           type="text"
           placeholder="Address, Transaction Hash, or Block Number"
