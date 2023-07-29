@@ -14,11 +14,9 @@ export default function Address({ params }) {
 
   const handleChange = (event) => {
     const selectedTokenAddy = event.target.value;
-    console.log("selectedTokenAddy", selectedTokenAddy);
     const selectedToken = tokens.tokens.find(
       (t) => t.contractAddress === selectedTokenAddy
     );
-    console.log("selectedToken", selectedToken);
     setToken(selectedToken);
   };
 
@@ -36,8 +34,6 @@ export default function Address({ params }) {
   }, [address]);
 
   if (!addressData) return <LoadingSpinner />;
-  // console.log(addressData);
-  // console.log("token", token);
 
   const { balance, tokens, transactions, price } = addressData;
 

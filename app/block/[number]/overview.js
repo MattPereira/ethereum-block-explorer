@@ -14,8 +14,6 @@ export default function Overview({ block }) {
   const gasUsageRate =
     (parseInt(gasUsed.hex) / parseInt(gasLimit.hex)).toFixed(2) * 100;
 
-  console.log(parseInt(gasUsed.hex) / parseInt(gasLimit.hex), gasUsageRate);
-
   const items = [
     { key: "Height :", value: number },
     {

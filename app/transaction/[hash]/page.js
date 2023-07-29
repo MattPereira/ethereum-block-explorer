@@ -24,8 +24,6 @@ export default function Transaction({ params }) {
 
   if (!tx) return <LoadingSpinner />;
 
-  console.log(tx);
-
   const items = [
     {
       label: "Hash :",

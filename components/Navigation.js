@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import blockSvg from "../public/block-array.svg";
-import searchSvg from "@/public/search.svg";
+import blockSvg from "@/public/block-array.svg";
+import SearchBar from "@/components/SearchBar";
 
 export default function Navigation() {
   return (
@@ -27,16 +27,8 @@ export default function Navigation() {
               <h1 className="mb-3 text-2xl text-white font-gothic">
                 Ethereum Mainnet Explorer
               </h1>
-              <div className="flex shadow-white rounded-lg">
-                <input
-                  className="w-full px-4 py-3 rounded-l-lg text-xl outline-none"
-                  id="search"
-                  type="text"
-                  placeholder="Address, Transaction Hash, or Block Number"
-                />
-                <button className="bg-[#28a0f0] w-16 flex justify-center items-center rounded-r-lg">
-                  <Image src={searchSvg} alt="eye glass search button" />
-                </button>
+              <div className="shadow-white rounded-lg">
+                <SearchBar />
               </div>
             </div>
           </div>

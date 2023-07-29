@@ -3,7 +3,6 @@ import axios from "axios";
 
 export async function GET(request, { params }) {
   try {
-    console.log(params);
     const { address } = params;
 
     const ETHERSCAN_BASE_URL = "https://api.etherscan.io/api";
