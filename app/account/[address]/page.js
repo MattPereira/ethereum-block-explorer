@@ -4,16 +4,30 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Transactions from "@/components/Transactions";
+import InfoDisplay from "@/components/InfoDisplay";
+import { Utils } from "alchemy-sdk";
 
 export default function Address({ params }) {
   const { address } = params;
   const [addressData, setAddressData] = useState();
+  const [token, setToken] = useState();
+
+  const handleChange = (event) => {
+    const selectedTokenAddy = event.target.value;
+    console.log("selectedTokenAddy", selectedTokenAddy);
+    const selectedToken = tokens.tokens.find(
+      (t) => t.contractAddress === selectedTokenAddy
+    );
+    console.log("selectedToken", selectedToken);
+    setToken(selectedToken);
+  };
 
   useEffect(() => {
     async function getAddressData() {
       try {
         const response = await axios.get(`/api/account/${address}`);
         setAddressData(response.data);
+        setToken(response.data.tokens.tokens[0]);
       } catch (err) {
         console.log("error", err);
       }
@@ -22,7 +36,44 @@ export default function Address({ params }) {
   }, [address]);
 
   if (!addressData) return <LoadingSpinner />;
-  console.log(addressData);
+  // console.log(addressData);
+  // console.log("token", token);
+
+  const { balance, tokens, transactions, price } = addressData;
+
+  const ethUsdPrice = price.ethusd;
+
+  const ethBalance = Utils.formatEther(balance);
+
+  const balanceItems = [
+    { key: "Balance :", value: ethBalance + " ETH" },
+    {
+      key: "USD Value :",
+      value:
+        "$" +
+        (ethBalance * ethUsdPrice).toFixed(2) +
+        ` (@ $${ethUsdPrice}/ETH)`,
+    },
+  ];
+
+  const tokenItems = [
+    {
+      key: "Token :",
+      value: (
+        <select
+          onChange={handleChange}
+          className="border border-neutral-300 rounded-md bg-white w-full xl:w-3/4"
+        >
+          {tokens.tokens.map((token) => (
+            <option key={token.contractAddress} value={token.contractAddress}>
+              {token.name} {`( ${token.symbol} )`}
+            </option>
+          ))}
+        </select>
+      ),
+    },
+    { key: "Balance :", value: token ? token.balance : "Loading..." },
+  ];
 
   return (
     <main className="px-5 lg:px-10">
@@ -30,10 +81,21 @@ export default function Address({ params }) {
         <h1 className="font-bold">Address</h1>
         <div>{address}</div>
       </div>
-      <h3 className="font-gothic text-3xl mb-3">Overview</h3>
 
-      <h3 className="font-gothic text-3xl mb-3">Transactions</h3>
-      <Transactions transactions={addressData.transactions} />
+      <h3 className="font-gothic text-3xl mb-3">Overview</h3>
+      <div className="mb-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <InfoDisplay items={balanceItems} />
+        </div>
+        <div>
+          <InfoDisplay items={tokenItems} />
+        </div>
+      </div>
+
+      <div>
+        <h3 className="font-gothic text-3xl mb-3">Transactions</h3>
+        <Transactions transactions={transactions} />
+      </div>
     </main>
   );
 }

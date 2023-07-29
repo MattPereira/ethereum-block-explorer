@@ -74,16 +74,16 @@ export default function Home() {
   return (
     <main>
       <section className="m-5 lg:m-10">
-        <div className="flex flex-wrap space-x-4">
-          <div className="flex-1">
+        <div className="grid grid-cols-1 2xl:grid-cols-3 gap-4">
+          <div>
             <h3 className="font-gothic text-3xl mb-3">Supply Stats</h3>
             <InfoDisplay items={supplyStats} />
           </div>
-          <div className="flex-1">
+          <div>
             <h3 className="font-gothic text-3xl mb-3">Price Stats</h3>
             <InfoDisplay items={priceStats} />
           </div>
-          <div className="flex-1">
+          <div>
             <h3 className="font-gothic text-3xl mb-3">Chain Stats</h3>
             <InfoDisplay items={chainStats} />
           </div>

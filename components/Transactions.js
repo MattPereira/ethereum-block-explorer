@@ -2,7 +2,6 @@ import { Utils } from "alchemy-sdk";
 import Link from "next/link";
 
 export default function Transactions({ transactions }) {
-  console.log(transactions);
   return (
     <div className="bg-white p-5 rounded-xl border border-neutral-300 shadow-md overflow-x-auto">
       <table className="font-gothic min-w-full text-xl">

@@ -6,30 +6,47 @@ export async function GET(request, { params }) {
     console.log(params);
     const { address } = params;
 
-    // alchemy provided endpoints
-    const balance = await alchemy.core.getBalance(address);
-    const transactionCount = await alchemy.core.getTransactionCount(address);
-    const tokens = await alchemy.core.getTokensForOwner(address);
+    const ETHERSCAN_BASE_URL = "https://api.etherscan.io/api";
 
-    // https://docs.etherscan.io/api-endpoints/accounts
-    const response = await axios.get("https://api.etherscan.io/api", {
-      params: {
-        module: "account",
-        action: "txlist",
-        address: address,
-        startblock: 0,
-        endblock: 99999999,
-        page: 1,
-        offset: 10,
-        sort: "asc",
-        apikey: process.env.ETHERSCAN_API_KEY,
-      },
-    });
+    const requests = [
+      alchemy.core.getBalance(address),
+      alchemy.core.getTokensForOwner(address),
+      axios.get(ETHERSCAN_BASE_URL, {
+        params: {
+          module: "account",
+          action: "txlist",
+          address: address,
+          startblock: 0,
+          endblock: 99999999,
+          page: 1,
+          offset: 10,
+          sort: "asc",
+          apikey: process.env.ETHERSCAN_API_KEY,
+        },
+      }),
+      axios.get(ETHERSCAN_BASE_URL, {
+        params: {
+          module: "stats",
+          action: "ethprice",
+          apikey: process.env.ETHERSCAN_API_KEY,
+        },
+      }),
+    ];
 
-    const transactions = response.data.result;
+    const [balance, tokens, txResponse, priceResponse] = await Promise.all(
+      requests
+    );
+
+    const transactions = txResponse.data.result;
+    const price = priceResponse.data.result;
 
     return new Response(
-      JSON.stringify({ balance, transactionCount, tokens, transactions })
+      JSON.stringify({
+        balance,
+        tokens,
+        transactions,
+        price,
+      })
     );
   } catch (err) {
     console.log("err", err);

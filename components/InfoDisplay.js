@@ -12,10 +12,10 @@ export default function InfoDisplay({ items }) {
             index !== items.length - 1 ? "border-b border-gray-300" : ""
           }`}
         >
-          <div className="md:basis-1/4">
-            <div className="font-bold">{item.key}</div>
+          <div className="sm:basis-1/4">
+            <div className="font-bold whitespace-nowrap">{item.key}</div>
           </div>
-          <div className="">
+          <div className="grow">
             <div>{item.value}</div>
           </div>
         </div>
