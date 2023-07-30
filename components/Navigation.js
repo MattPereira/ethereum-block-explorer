@@ -19,7 +19,7 @@ export default function Navigation() {
             <Image src={EthLogo} width={40} height={40} alt="Ethersight Logo" />
             <h1 className="font-gothic text-4xl">Etherspect</h1>
           </Link>
-          <div className="w-full md:w-3/4">
+          <div className="w-full md:w-1/2">
             {pathname !== "/" && <SearchBar />}
           </div>
         </div>

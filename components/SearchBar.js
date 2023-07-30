@@ -4,36 +4,43 @@ import Image from "next/image";
 import searchSvg from "@/public/search.svg";
 import { useForm } from "react-hook-form";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 /**
  * dynamically directs user to account, transaction, or block page
  * depending on the input
- *
  */
-
-// TODO: handle not found input page
-// TODO: handle 404 page
 export default function SearchBar() {
+  const router = useRouter();
   const pathname = usePathname();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
 
-  // accounts are 42 characters long and start with 0x
+  const onSubmit = (data) => {
+    console.log(data);
 
-  // transactions are 66 characters long and start with 0x
+    const input = data.search;
+    // accounts are 42 characters long and start with 0x
+    if (input.startsWith("0x") && input.length === 42) {
+      router.push(`/account/${input}`);
 
-  // blocks are numbers between 0 and 99999999
+      // transactions are 66 characters long and start with 0x
+    } else if (input.startsWith("0x") && input.length === 66) {
+      router.push(`/transaction/${input}`);
 
-  // maybe check if its a number less than latest block?
+      // blocks are integers greater than 0
+    } else if (Number.isInteger(Number(input)) && Number(input) > 0) {
+      router.push(`/block/${input}`);
+    } else {
+      router.push(`/404?query=${input}`);
+    }
+  };
 
-  // if all of those conditions fail, send user to 404 page
-
-  // how to move search bar into navbar if not on home page?
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="w-full flex">
@@ -46,7 +53,7 @@ export default function SearchBar() {
           placeholder="Address, Transaction Hash, or Block Number"
           {...register("search", { required: true })}
         />
-        {errors.exampleRequired && <span>This field is required</span>}
+        {errors.search && <span>This field is required</span>}
         <button
           type="submit"
           className="bg-[#28a0f0] w-16 flex justify-center items-center rounded-r-lg"

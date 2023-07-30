@@ -39,8 +39,6 @@ export default function Home() {
 
   if (!blockDetails || !stats) return <LoadingSpinner />;
 
-  console.log("STATS", stats);
-
   const { nodes, prices, supply } = stats;
 
   const supplyStats = [

@@ -4,6 +4,9 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import axios from "axios";
 import blockSvg from "@/public/block.svg";
+import { useRouter } from "next/navigation";
+
+import CustomError from "@/components/CustomError";
 
 import Transactions from "@/components/Transactions";
 import Overview from "./overview";
@@ -11,10 +14,13 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function BlockPage({ params }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const search = searchParams.get("tab");
 
   const [block, setBlock] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState(search || "overview");
 
   const blockNumber = +params.number;
@@ -23,16 +29,27 @@ export default function BlockPage({ params }) {
     async function getblock() {
       try {
         const response = await axios.get(`/api/block/${blockNumber}`);
-        setBlock(response.data);
+        console.log("response", response);
+        if (response.data === null) {
+          setError(true);
+        } else {
+          setBlock(response.data);
+        }
       } catch (err) {
         console.log("error", err);
+      } finally {
+        setLoading(false);
       }
     }
 
     getblock();
-  }, [blockNumber]);
+  }, [blockNumber, router]);
 
-  if (!block) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
+
+  if (error) return <CustomError message={`Block #${blockNumber} not found`} />;
+
+  console.log("block", block);
 
   return (
     <main className="m-5 lg:m-10">
