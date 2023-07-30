@@ -3,7 +3,12 @@ import axios from "axios";
 
 export async function GET(request, { params }) {
   try {
-    const { address } = params;
+    let { address } = params;
+
+    // if params end in ".eth" perform ens lookup
+    if (address.endsWith(".eth")) {
+      address = await alchemy.core.resolveName(address);
+    }
 
     const ETHERSCAN_BASE_URL = "https://api.etherscan.io/api";
 

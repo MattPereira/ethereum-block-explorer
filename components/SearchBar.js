@@ -26,7 +26,10 @@ export default function SearchBar() {
 
     const input = data.search;
     // accounts are 42 characters long and start with 0x
-    if (input.startsWith("0x") && input.length === 42) {
+    if (
+      (input.startsWith("0x") && input.length === 42) ||
+      input.endsWith(".eth")
+    ) {
       router.push(`/account/${input}`);
 
       // transactions are 66 characters long and start with 0x
@@ -50,10 +53,10 @@ export default function SearchBar() {
           }`}
           id="search"
           type="text"
-          placeholder="Address, Transaction Hash, or Block Number"
+          placeholder="Address, ENS Name, Transaction Hash, or Block Number"
+          required
           {...register("search", { required: true })}
         />
-        {errors.search && <span>This field is required</span>}
         <button
           type="submit"
           className="bg-[#28a0f0] w-16 flex justify-center items-center rounded-r-lg"
@@ -61,6 +64,7 @@ export default function SearchBar() {
           <Image src={searchSvg} alt="eye glass search button" />
         </button>
       </form>
+      {/* {errors.search && <span>This field is required</span>} */}
     </>
   );
 }
