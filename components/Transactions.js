@@ -9,6 +9,9 @@ export default function Transactions({ transactions }) {
           <tr className="border-b border-black">
             <th className="text-start pb-2 px-2">Txn Hash</th>
             <th className="text-start pb-2 px-2">Block</th>
+            {transactions[0].timeStamp && (
+              <th className="text-start pb-2 px-2">Date</th>
+            )}
             <th className="text-start pb-2 px-2">From</th>
             <th></th>
             <th className="text-start pb-2 px-2">To</th>
@@ -17,7 +20,8 @@ export default function Transactions({ transactions }) {
         </thead>
         <tbody>
           {transactions.map((transaction) => {
-            const { hash, from, to, value, blockNumber } = transaction;
+            const { hash, from, to, value, blockNumber, timeStamp } =
+              transaction;
 
             const txHash = hash?.slice(0, 10) + "...";
             const txFrom = from?.slice(0, 5) + "..." + from.slice(-4);
@@ -42,6 +46,11 @@ export default function Transactions({ transactions }) {
                     {blockNumber}
                   </Link>
                 </td>
+                {timeStamp && (
+                  <td className="py-2 px-2 border-b border-neutral-300">
+                    {new Date(timeStamp * 1000).toLocaleString()}
+                  </td>
+                )}
                 <td className="py-2 px-2 text-start border-b border-neutral-30">
                   <Link href={`/account/${from}`} className="text-blue-500">
                     {txFrom}

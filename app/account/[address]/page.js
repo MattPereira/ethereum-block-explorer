@@ -37,6 +37,8 @@ export default function Address({ params }) {
 
   const { balance, tokens, transactions, price } = addressData;
 
+  console.log("transactions", transactions);
+
   const ethUsdPrice = price.ethusd;
 
   const ethBalance = Utils.formatEther(balance);
