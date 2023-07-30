@@ -63,10 +63,7 @@ export default function Home() {
     },
   ];
 
-  const chainStats = [
-    { key: "Total Nodes :", value: nodes.TotalNodeCount },
-    { key: "Chain Size :", value: "tbd" },
-  ];
+  const nodeStats = [{ key: "Total Nodes :", value: nodes.TotalNodeCount }];
 
   return (
     <main>
@@ -92,7 +89,7 @@ export default function Home() {
       <section className="m-5 lg:m-10">
         <div className="grid grid-cols-1 2xl:grid-cols-3 gap-4">
           <div>
-            <h3 className="font-gothic text-3xl mb-3">Supply Stats</h3>
+            <h3 className="font-gothic text-3xl mb-3">Chain Stats</h3>
             <InfoDisplay items={supplyStats} />
           </div>
           <div>
@@ -100,8 +97,8 @@ export default function Home() {
             <InfoDisplay items={priceStats} />
           </div>
           <div>
-            <h3 className="font-gothic text-3xl mb-3">Chain Stats</h3>
-            <InfoDisplay items={chainStats} />
+            <h3 className="font-gothic text-3xl mb-3">Node Stats</h3>
+            <InfoDisplay items={nodeStats} />
           </div>
         </div>
       </section>
