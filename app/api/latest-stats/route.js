@@ -37,6 +37,9 @@ export async function GET(request) {
 
     return new Response(JSON.stringify({ supply, prices, nodes }));
   } catch (err) {
-    console.log("err", err);
+    console.error("err", err);
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 }

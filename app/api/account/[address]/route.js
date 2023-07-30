@@ -3,27 +3,23 @@ import axios from "axios";
 
 export async function GET(request, { params }) {
   try {
-    const { address } = params;
-
-    let ensLookup;
+    let { address } = params;
 
     // if params end in ".eth" perform ens lookup
     if (address.endsWith(".eth")) {
-      ensLookup = await alchemy.core.resolveName(address);
+      address = await alchemy.core.resolveName(address);
     }
-
-    const addy = ensLookup || address;
 
     const ETHERSCAN_BASE_URL = "https://api.etherscan.io/api";
 
     const requests = [
-      alchemy.core.getBalance(addy),
-      alchemy.core.getTokensForOwner(addy),
+      alchemy.core.getBalance(address),
+      alchemy.core.getTokensForOwner(address),
       axios.get(ETHERSCAN_BASE_URL, {
         params: {
           module: "account",
           action: "txlist",
-          address: addy,
+          address: address,
           startblock: 0,
           endblock: 99999999,
           page: 1,
@@ -57,6 +53,9 @@ export async function GET(request, { params }) {
       })
     );
   } catch (err) {
-    console.log("err", err);
+    console.error("err", err);
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 }

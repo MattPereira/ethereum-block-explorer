@@ -9,6 +9,8 @@ export async function GET(request, { params }) {
     console.log("blockData", blockData);
     return new Response(JSON.stringify(blockData));
   } catch (err) {
-    console.log("err", err);
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 }
