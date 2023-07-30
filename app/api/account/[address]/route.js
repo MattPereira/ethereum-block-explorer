@@ -3,23 +3,27 @@ import axios from "axios";
 
 export async function GET(request, { params }) {
   try {
-    let { address } = params;
+    const { address } = params;
+
+    let ensLookup;
 
     // if params end in ".eth" perform ens lookup
     if (address.endsWith(".eth")) {
-      address = await alchemy.core.resolveName(address);
+      ensLookup = await alchemy.core.resolveName(address);
     }
+
+    const addy = ensLookup || address;
 
     const ETHERSCAN_BASE_URL = "https://api.etherscan.io/api";
 
     const requests = [
-      alchemy.core.getBalance(address),
-      alchemy.core.getTokensForOwner(address),
+      alchemy.core.getBalance(addy),
+      alchemy.core.getTokensForOwner(addy),
       axios.get(ETHERSCAN_BASE_URL, {
         params: {
           module: "account",
           action: "txlist",
-          address: address,
+          address: addy,
           startblock: 0,
           endblock: 99999999,
           page: 1,
