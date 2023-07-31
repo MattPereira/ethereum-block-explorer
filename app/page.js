@@ -74,12 +74,7 @@ export default function Home() {
               <h1 className="mb-3 text-2xl text-white font-gothic">
                 Ethereum Mainnet Explorer
               </h1>
-              <div
-                style={{
-                  boxShadow: "rgba(189, 197, 209, 0.25) 0px 8px 19.2px 0px",
-                }}
-                className="rounded-lg"
-              >
+              <div>
                 <SearchBar />
               </div>
             </div>

@@ -46,7 +46,13 @@ export default function SearchBar() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full flex">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full flex"
+        style={{
+          boxShadow: "rgba(189, 197, 209, 0.25) 0px 8px 19.2px 0px",
+        }}
+      >
         <input
           className={`w-full px-4 py-3 rounded-l-lg text-xl ${
             pathname === "/" ? "outline-none" : "border border-neutral-400"
