@@ -1,4 +1,4 @@
-# Etherspect
+# [Etherspect](https://etherspect.vercel.app/)
 
 - Ethereum block explorer that displays latest data about blocks, transactions, accounts, and prices
 - Search for any address, ENS name, transaction hash, or block number on the Ethereum mainnet
@@ -12,9 +12,8 @@
 
 ## Getting Started
 
-- Clone the repo
-- Install dependencies
-- Run the development server with `npm run dev`
+1. Install dependencies with `npm install`
+2. Run the development server with `npm run dev`
 
 ## Resources
 
